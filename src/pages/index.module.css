@@ -40,6 +40,11 @@
 .heroBanner   h3 {
   color:#fff !important;
 }
+@media screen and (max-width: 680px) {
+  .heroBanner .heroInner {
+    flex-direction: column !important;
+  }
+}
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;

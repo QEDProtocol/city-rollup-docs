@@ -33,11 +33,12 @@ const DogeBackground: React.FC<IDogeBackgroundProps> = ({className, words}: IDog
 
   useEffect(()=>{
     if(size && canvRef.current){
-      runnerRef.current = new DogeTextRunner(words, size.width, size.height);
+      runnerRef.current = new DogeTextRunner(words, size.width, size.height, 0.5);
       let startTime = performance.now();
       let nextTime = 100;
+      let cancelled = false;
       const animFrame = (dt: any) =>{
-        if(runnerRef.current){
+        if(!cancelled && runnerRef.current){
           window.requestAnimationFrame(animFrame);
           if((dt-startTime)>nextTime){
             runnerRef.current.addText(randColor(), 1000, 3, 1000);
@@ -46,7 +47,6 @@ const DogeBackground: React.FC<IDogeBackgroundProps> = ({className, words}: IDog
           }
           const ctx = canvRef.current.getContext('2d');
           if(ctx){
-            ctx.clearRect(0, 0, size.width, size.height);
             runnerRef.current.render(canvRef.current, ctx, size.width, size.height, dt);
           }
         }
@@ -54,6 +54,7 @@ const DogeBackground: React.FC<IDogeBackgroundProps> = ({className, words}: IDog
       };
       let handle = window.requestAnimationFrame(animFrame);
       return ()=>{
+        cancelled = true;
         runnerRef.current = null;
         window.cancelAnimationFrame(handle)
       };

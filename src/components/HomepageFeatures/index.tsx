@@ -15,7 +15,7 @@ const FeatureList: FeatureItem[] = [
     src: require('@site/static/img/scale-doge.png').default,
     description: (
       <>
-        ZKP on dogecoin makes it possible to securely scale doge <b>without increasing the block size</b> or <b>making it more difficult to operate a doge node</b>
+        ZKP on Dogecoin makes it possible to securely scale doge <b>without increasing the block size</b> or <b>making it more difficult to operate a doge node</b>
       </>
     ),
   },
@@ -24,7 +24,7 @@ const FeatureList: FeatureItem[] = [
     src: require('@site/static/img/defi-doge.png').default,
     description: (
       <>
-        With <Link to="/docs">OP_CHECKGROTH16VERIFY</Link> it is possible to build dApps and DeFi on dogecoin, adding utility to doge coin, increasing on chain activity and improving doge miner profitability via increased fees.
+        With <Link to="/docs/OP_CHECKGROTH16VERIFY">OP_CHECKGROTH16VERIFY</Link> it is possible to build dApps and DeFi on Dogecoin, adding utility to Doge, increasing on chain activity and improving doge miner profitability via increased fees.
       </>
     ),
   },
@@ -33,7 +33,7 @@ const FeatureList: FeatureItem[] = [
     src: require('@site/static/img/security-doge.png').default,
     description: (
       <>
-        City Rollup and other zk rollups built using <Link to="/docs">OP_CHECKGROTH16VERIFY</Link> inherit the full security of dogecoin using the power of zero knowledge proofs
+        City Rollup and other zk rollups built using <Link to="/docs/OP_CHECKGROTH16VERIFY">OP_CHECKGROTH16VERIFY</Link> inherit the full security of Dogecoin using the power of zero knowledge proofs
       </>
     ),
   },
@@ -41,7 +41,7 @@ const FeatureList: FeatureItem[] = [
 
 function Feature({title, src, description}: FeatureItem) {
   return (
-    <div className={clsx('col col--4')}>
+    <div className={clsx('col col--4', styles.featureCol)}>
       <div className="text--center">
         <img className={styles.featureSvg} src={src} role="img" />
       </div>

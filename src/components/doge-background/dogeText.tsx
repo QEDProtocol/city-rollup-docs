@@ -76,12 +76,14 @@ class DogeTextRunner {
   height: number;
   instances: DogeTextAnimator[] = [];
   wordCtr = 0;
+  globalOpacity: number;
 
-  constructor(words: string[], width: number, height: number){
+  constructor(words: string[], width: number, height: number, globalOpacity = 1){
     this.words = words;
     this.width = width;
     this.height = height;
     this.wordCtr = Math.floor(words.length*Math.random())
+    this.globalOpacity = globalOpacity;
   }
   addText(color: string, speed: number, cycles: number, fadeOutTime: number) {
     const x = Math.random();
@@ -111,8 +113,12 @@ class DogeTextRunner {
       const config = instance.render(absTime);
       ctx.fillStyle = config.color;
       ctx.font = `${fontScaleFactor*config.scale}px "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", sans-serif`;
-      ctx.globalAlpha = config.opacity;
-      ctx.fillText(config.text, config.position.x*(width-2*fontScaleFactor)+fontScaleFactor, config.position.y*(height-2*fontScaleFactor)+fontScaleFactor);
+      const textMetrics = ctx.measureText(config.text);
+      const calcX = config.position.x*(width-2*fontScaleFactor)+fontScaleFactor;
+      const calcY = config.position.y*(height-2*fontScaleFactor)+fontScaleFactor;
+      const x = Math.min(Math.max(8, calcX - textMetrics.width/2), width-textMetrics.width-8);
+      ctx.globalAlpha = config.opacity*this.globalOpacity;
+      ctx.fillText(config.text, x, calcY);
     });
   }
 

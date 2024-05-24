@@ -18,9 +18,9 @@ sidebar_position: 1
 
 ## Summary:
 
-We propose adding an op code to dogecoin which verifies a Groth16 zero knowledge proof over BLS12-381, **OP_CHECKGROTH16VERIFY**.
+We propose adding an op code to dogecoin which verifies a [Groth16](https://eprint.iacr.org/2016/260.pdf) zero knowledge proof over BLS12-381, **OP_CHECKGROTH16VERIFY**.
 
-In particular, we propose that the op code verify a Groth16 proof with two public inputs, and support two modes of operation controlled by the stack:
+In particular, we propose that the op code verify a [Groth16](https://eprint.iacr.org/2016/260.pdf) proof with two public inputs, and support two modes of operation controlled by the stack:
 
 - Mode 0: Verify a proof with 2 public inputs and verifier key, all of which are stored on the stack, marking the transaction if the proof is invalid and behaving like OP_NOP otherwise
   
@@ -132,6 +132,7 @@ Via the SIGHASH, we can allow the smart contract to be aware of any deposits of 
 
 ![sighashintrospection@2xpng](./img/sighash-introspection@2x.png)
 
+To learn more about this sighash introspection technique, check out our [reference implementation in CityRollup](https://github.com/QEDProtocol/city-rollup/blob/alpha/city_rollup_circuit/src/introspection/gadgets/rollup/introspection.rs)
 
 ## Script Example
 Ideally we would like to store the verifier data and current state root in the P2SH redeem script of the UTXO so that the UTXO can only be spent if we provide a valid state transition proof for given logic. Due to script limitations, stack elements must be at most 80 bytes and since the the verifier key is a total size of 480 bytes we can split it up to into 6 80-byte chunks.
