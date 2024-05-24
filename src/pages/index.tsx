@@ -6,11 +6,16 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
+import DogeBackground from '../components/doge-background';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
+      <div className={styles.dogeBgCon}>
+        <DogeBackground words={["zkp","groth16","trustless","scalability","rollup","dogecoin","op code"]} />
+      </div>
+      <div className={styles.heroInner}>
         <div className={styles.headerImageCon}>
           <img src={require('@site/static/img/city-rollup-logo.png').default} alt="City Rollup" className={styles.headerImage} />
         </div>
@@ -24,6 +29,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
+      </div>
     </header>
   );
 }
@@ -32,8 +38,8 @@ export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`city rollup: a trustless rollup that makes doge stronk`}
+      description="OP_CHECKGROTH16VERIFY makes the doge stronk">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
