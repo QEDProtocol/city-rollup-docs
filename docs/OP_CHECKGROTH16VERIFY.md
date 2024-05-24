@@ -37,6 +37,57 @@ docker run -p 1337:1337 -it --rm qedprotocol/bitide-doge:latest
 
 To test, you can visit http://localhost:1337 for BitIDE with OP_CHECKGROTH16VERIFY enabled, http://localhost:1337/explorer/ to view a block explorer and http://devnet:devnet@localhost:1337/bitcoin-rpc to interact with the local testnet via RPC.
 
+## Usage
+In order to maintain backwards compatibility, we propose:
+* Redefining an available OP_NOP instruction such as 0xb3
+* Implementing OP_CHECKGROTH16VERIFY such that it verifies the proof and leave the stack unchanged (soft-forkable)
+* Mark the transaction as invalid if and only if the proof is invalid
+
+The stack parameters accessed by OP_CHECKGROTH16VERIFY are as follows:
+### Mode 0 (Two public inputs)
+```asm
+<π_A_x> // (Proof) Fp -> 48 bytes
+<π_A_y> // (Proof) Fp -> 48 bytes
+<π_B_x_A0> // (Proof) Fp -> 48 bytes
+<π_B_x_A1> // (Proof) Fp -> 48 bytes
+<π_B_y_A0> // (Proof) Fp -> 48 bytes
+<π_B_y_A1> // (Proof) Fp -> 48 bytes
+<π_C_x> // (Proof) Fp -> 48 bytes
+<π_C_y> // (Proof) Fp -> 48 bytes
+<public input 0> // the first public input of the proof (32 bytes/Fr)
+<public input 1> // the second public input of the proof (32 bytes/Fr)
+<VERIFIER_DATA[0:80]> // bytes 0-80 of the verifier data
+<VERIFIER_DATA[80:160]> // bytes 80-160 of the verifier data
+<VERIFIER_DATA[160:240]> // bytes 160-240 of the verifier data
+<VERIFIER_DATA[240:320]> // bytes 240-320 of the verifier data
+<VERIFIER_DATA[320:400]> // bytes 320-400 of the verifier data  
+<VERIFIER_DATA[400:480]> // bytes 400-480 of the verifier data  
+OP_0 // mode 0
+OP_CHECKGROTH16VERIFY
+```
+
+
+### Mode 1 (Public Input 0 == user defined public input, Public Input 1 == SIGHASH)
+```asm
+<π_A_x> // (Proof) Fp -> 48 bytes
+<π_A_y> // (Proof) Fp -> 48 bytes
+<π_B_x_A0> // (Proof) Fp -> 48 bytes
+<π_B_x_A1> // (Proof) Fp -> 48 bytes
+<π_B_y_A0> // (Proof) Fp -> 48 bytes
+<π_B_y_A1> // (Proof) Fp -> 48 bytes
+<π_C_x> // (Proof) Fp -> 48 bytes
+<π_C_y> // (Proof) Fp -> 48 bytes
+<public input 0> // the first public input of the proof (32 bytes/Fr)
+<VERIFIER_DATA[0:80]> // bytes 0-80 of the verifier data
+<VERIFIER_DATA[80:160]> // bytes 80-160 of the verifier data
+<VERIFIER_DATA[160:240]> // bytes 160-240 of the verifier data
+<VERIFIER_DATA[240:320]> // bytes 240-320 of the verifier data
+<VERIFIER_DATA[320:400]> // bytes 320-400 of the verifier data  
+<VERIFIER_DATA[400:480]> // bytes 400-480 of the verifier data  
+OP_1 // mode 1
+OP_CHECKGROTH16VERIFY
+```
+
 ## Deep Dive: How Groth16 + Sighash enables trustless scaling and smart contract functionality on Dogecoin
 
 To better explain how the OP_CHECKGROTH16VERIFY can help scale Dogecoin, it is necessary to first examine how zero knowledge proofs enable the verification of arbitrary computation from a birds eye view.
@@ -78,3 +129,66 @@ To enable trustless smart contract-like functionality without any additional bur
 Via the SIGHASH, we can allow the smart contract to be aware of any deposits of Doge made into the contract as well as any withdrawals or outputs that must be made in order to spend the UTXO:
 
 ![sighashintrospection@2xpng](./img/sighash-introspection@2x.png)
+
+
+## Script Example
+Ideally we would like to store the verifier data and current state root in the P2SH redeem script of the UTXO so that the UTXO can only be spent if we provide a valid state transition proof for given logic. Due to script limitations, stack elements must be at most 80 bytes and since the the verifier key is a total size of 480 bytes we can split it up to into 6 80-byte chunks.
+
+In this case, our ideal script would look something like the following:
+```asm
+<public input 0> // the merkle root of the current state of the application (32 bytes)
+<VERIFIER_DATA[0:80]> // bytes 0-80 of the verifier data
+<VERIFIER_DATA[80:160]> // bytes 80-160 of the verifier data
+<VERIFIER_DATA[160:240]> // bytes 160-240 of the verifier data
+<VERIFIER_DATA[240:320]> // bytes 240-320 of the verifier data
+<VERIFIER_DATA[320:400]> // bytes 320-400 of the verifier data  
+<VERIFIER_DATA[400:480]> // bytes 400-480 of the verifier data  
+OP_1 // mode 1
+OP_CHECKGROTH16VERIFY // verify the proof and mark the transaction as invalid if the proof is invalid
+OP_2DROP // clean up the stack data
+OP_2DROP
+OP_2DROP
+OP_2DROP
+OP_2DROP
+OP_2DROP
+OP_1 // successful spend
+```
+However, since the redeem script is limited to 520 bytes, we cannot directly use this approach. Instead we can hash the first 80 bytes of the verifier data, store the hash in the redeem script and provide the first 80 byte of the verifier key in the spend witness instead:
+
+```asm
+<public input 0> // the merkle root of the current state of the application
+OP_SWAP // move the first 80 bytes of the verifier data to the top of the stack 
+OP_DUP // duplicate the first 80 bytes of the verifier data on the stack
+OP_SHA256 # hash the first 80 bytes of verifier data
+<SHA256(VERIFIER_DATA[0:80])> // hard coded, known sha256 hash of the first 80 bytes of verifier data
+OP_EQUALVERIFY // ensure the first 80 bytes of verifier data have the correct hash
+// now the first 80 bytes of the verifier data are known to be correct and are at the top of the stack
+<VERIFIER_DATA[80:160]> // bytes 80-160 of the verifier data
+<VERIFIER_DATA[160:240]> // bytes 160-240 of the verifier data
+<VERIFIER_DATA[240:320]> // bytes 240-320 of the verifier data
+<VERIFIER_DATA[320:400]> // bytes 320-400 of the verifier data  
+<VERIFIER_DATA[400:480]> // bytes 400-480 of the verifier data  
+OP_1 // mode 1
+OP_CHECKGROTH16VERIFY // verify the proof and mark the transaction as invalid if the proof is invalid
+OP_2DROP // clean up the stack data
+OP_2DROP
+OP_2DROP
+OP_2DROP
+OP_2DROP
+OP_2DROP
+OP_1 // successful spend
+```
+
+To spend the UTXO, we provide the following witness:
+```asm
+<π_A_x> // (Proof) Fp -> 48 bytes
+<π_A_y> // (Proof) Fp -> 48 bytes
+<π_B_x_A0> // (Proof) Fp -> 48 bytes
+<π_B_x_A1> // (Proof) Fp -> 48 bytes
+<π_B_y_A0> // (Proof) Fp -> 48 bytes
+<π_B_y_A1> // (Proof) Fp -> 48 bytes
+<π_C_x> // (Proof) Fp -> 48 bytes
+<π_C_y> // (Proof) Fp -> 48 bytes
+<VERIFIER_DATA[0:80]> // bytes 0-80 of the verifier data
+```
+
