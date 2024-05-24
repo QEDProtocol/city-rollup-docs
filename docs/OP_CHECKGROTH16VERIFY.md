@@ -118,7 +118,9 @@ The prover could then spend the UTXO by providing the proof in the witness of th
 
 ![zkverifierpng](./img/zk-verifier.png)
 
-Crucially, the size and complexity of verifying a Groth16 proof does not depend on the complexity or size of the computation being verified, meaning that OP_CHECKGROTH16VERIFY can verify an arbitrary amount of computation performed off chain without increasing the workload on Dogecoin nodes, meaning that UTXO spend condition logic can be arbitrarilly computationally complex while still respecting all existing limitations imposed on P2SH spends:
+Crucially, the size and complexity of verifying a Groth16 proof does not depend on the complexity or size of the computation being verified, meaning that OP_CHECKGROTH16VERIFY can verify an arbitrary amount of computation performed off chain without increasing the workload on Dogecoin nodes.
+
+This enables Doge to validate new kinds of transactions like smart contract state machines and complex stateful without requiring any further changes to dogecoin, all while still respecting all existing limitations imposed on P2SH spends:
 
 ![constantsizeproofs@2xpng](./img/constant-size-proofs@2x.png)
 
