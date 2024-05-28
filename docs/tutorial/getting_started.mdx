@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 ---
-# Installation
+# Getting Started
 
 
 ## Dependencies
@@ -10,5 +10,15 @@ To setup City Rollup, you first need to install [Docker](https://docs.docker.com
 Once docker is installed, clone the City Rollup repo:
 ```bash
 git clone https://github.com/QEDProtocol/city-rollup
+cd city-rollup
+make build
 ```
 
+After City Rollup is installed, you can spin up a minimal instance of CityRollup with the following commands:
+```bash
+make relaunch
+make run-rpc-server
+make run-orchestrator
+make run-api-server
+make run-l2-worker
+```
