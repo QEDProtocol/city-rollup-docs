@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# OP_GROTH16VERIFY
+# OP_CHECKGROTH16VERIFY
 **An ultra-lightweight, soft-forkable solution to trustlessly scale and add smart contract-like functionality to Dogecoin**
 
 ## Highlights:
