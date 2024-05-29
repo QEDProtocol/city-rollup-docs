@@ -1,0 +1,18 @@
+# Add L1 Deposit
+Note: This is a local only operation, in production you should send from your real doge wallet
+
+## Description
+Funds the P2PKH key specified and then funds latest block deposit address with your wallet
+
+
+
+## Usage
+```bash
+city-rollup-user-cli l1-deposit --private-key <dogecoin l1 private key (hex, not wif)> --amount <amount to deposit in sats>
+```
+
+## Example
+Deposit 5 DOGE from the wallet with a private key  0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34
+``bash
+city-rollup-user-cli l1-deposit --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --amount 500000000
+```
