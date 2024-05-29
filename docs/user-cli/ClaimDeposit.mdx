@@ -1,0 +1,16 @@
+# Claim Deposit
+
+## Description
+Users can claim their deposits from the rollup chain by providing the deposit nonce and the destination address.
+
+## Usage
+```bash
+city-rollup-user-cli claim-deposit --rpc_address <rpc_address> --network <network> --private_key <private_key> --user_id <user_id> --nonce <nonce> --destination <destination>
+```
+
+## Example
+Add withdrawal  5 DOGE from the wallet with a private key  0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34
+```bash
+city-rollup-user-cli l1-deposit --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --amount 500000000
+```
+

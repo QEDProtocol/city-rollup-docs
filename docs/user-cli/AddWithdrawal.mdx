@@ -1,0 +1,18 @@
+# Add Withdrawal
+
+## Description
+Withdraw funds from the deposit to specific address.
+
+## Usage
+```bash
+city-rollup-user-cli add-withdrawal --rpc_address <rpc_address> --network <network> --private_key <private_key> --user_id <user_id> --value <value> --nonce <nonce> --destination <destination>
+```
+
+## Example
+Withdrawal 5 DOGE from the wallet with a private key  0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 to the address 0x7a9f3b2f8f5e3b7f1f3f0f0f0f0f0f0f0f0f0f0f
+```bash
+city-rollup-user-cli add-withdrawal --rpc_address http://localhost:8545 --network development --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --user-id 1 --value 500000000 --nonce 1 --destination 0x7a9f3b2f8f5e3b7f1f3f0f0f0f0f0f0f0f0f0f0f
+```
+
+
+
