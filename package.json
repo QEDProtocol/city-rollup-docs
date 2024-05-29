@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@docusaurus/core": "3.3.2",
+    "@docusaurus/plugin-google-gtag": "^3.3.2",
     "@docusaurus/preset-classic": "3.3.2",
     "@mdx-js/react": "^3.0.0",
     "@react-hook/resize-observer": "^2.0.1",
