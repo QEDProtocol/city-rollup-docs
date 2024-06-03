@@ -1,11 +1,11 @@
 # Claim Deposit
 
 ## Description
-Users can claim their deposits from the rollup chain by providing the deposit nonce and the destination address.
+Users can declare that they have indeed staked on L1 by providing the transaction hash and user id of the deposit.
 
 ## Usage
 ```bash
-city-rollup-user-cli --rpc_address <rpc_address> --network <network> claim-deposit --private-key <private_key> --txid <txid> --user_id <user_id>
+city-rollup-user-cli claim-deposit --private-key <dogecoin l1 private key (hex, not wif)> --txid <L1 deposit transaction hash> --user_id <user_id>
 ```
 
 ## Example

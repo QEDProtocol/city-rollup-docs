@@ -1,11 +1,11 @@
 # Add Withdrawal
 
 ## Description
-Withdraw funds from the deposit to specific address.
+Withdraw funds from L2 to the address specified on L1.
 
 ## Usage
 ```bash
-city-rollup-user-cli add-withdrawal --rpc_address <rpc_address> --network <network> --private-key <dogecoin l1 private key (hex, not wif)>  --user_id <user_id> --value <value> --nonce <nonce> --destination <destination>
+city-rollup-user-cli add-withdrawal --private-key <L2 private key> --user_id <user_id> --value <ammount to withdraw in sats> --nonce <a random number for enhanced security> --destination <L1 address>
 ```
 
 ## Example

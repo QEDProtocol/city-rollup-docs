@@ -1,17 +1,19 @@
 # Register User
 
 ## Description
-Register a new user on the rollup chain. User should provide a private key to register on the rollup chain.
+Register a new user on the rollup chain. 
+Users should provide an L2 private key for registration. If not, a random wallet can be generated through the `random-wallet` command.
+
 ## Usage
 ```bash
-city-rollup-user-cli register-user --rpc_address <rpc_address> --private_key <private_key>
+city-rollup-user-cli register-user --private_key <L2 private key>
 ```
 
 ## Example
 Register a new user with a private key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34
 
 ```bash
-city-rollup-user-cli register-user --rpc_address http://127.0.0.1:8545 --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34
+city-rollup-user-cli register-user --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34
 ```
 
 ## Note

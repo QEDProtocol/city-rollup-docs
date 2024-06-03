@@ -5,13 +5,13 @@ Transfer tokens from one user to another user on the rollup chain.
 
 ## Usage
 ```bash
-city-rollup-user-cli transfer --rpc_address <rpc_address> --network <network> --private_key <private_key> --value <value> --from <sender_user_id> --to <receiver_user_id> --nonce <nonce>
+city-rollup-user-cli transfer --private_key <L2 private key> --value <ammount in sats> --from <sender_user_id> --to <receiver_user_id> --nonce <specific to enhanced security>
 ```
 
 ## Example
 Transfer 5 DOGE from user 1 to user 2 with a private key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34
 ```bash
-city-rollup-user-cli transfer --rpc_address http://localhost:8545 --network development --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --value 500000000 --from 1 --to 2 --nonce 1
+city-rollup-user-cli transfer --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --value 500000000 --from 1 --to 2 --nonce 1
 ```
 
 ## Note
