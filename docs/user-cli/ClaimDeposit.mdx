@@ -5,13 +5,13 @@ Users can declare that they have indeed staked on L1 by providing the transactio
 
 ## Usage
 ```bash
-city-rollup-user-cli claim-deposit --private-key <dogecoin l1 private key (hex, not wif)> --txid <L1 deposit transaction hash> --user_id <user_id>         
+city-rollup-user-cli claim-deposit --private-key <l1 private key (hex, not wif)> --txid <L1 deposit transaction hash> --user-id <user_id>         
 ```
 
 ## Example
-Claim deposit with the txid 0x7a9f3b2f8f5e3b7f1f3f0f0f0f0f0f0f0f0f0f0f and user_id 1
+The user's private key is 0x80e795d4a4caadd7047af389d9f7f220562feb6196032e2131e10563352c4bcc, and the user uses transaction hash a97d6231eaba54ccd65185134b7e830562540d933598d9decc6ec36bf4f632d5 and user_id 1 to claim the deposit
 ```bash
-city-rollup-user-cli claim-deposit --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --txid 0x7a9f3b2f8f5e3b7f1f3f0f0f0f0f0f0f0f0f0f0f --user_id 1         
+city-rollup-user-cli claim-deposit --private-key 80e795d4a4caadd7047af389d9f7f220562feb6196032e2131e10563352c4bcc --txid a97d6231eaba54ccd65185134b7e830562540d933598d9decc6ec36bf4f632d5 --user-id 1         
 ```
 
 
