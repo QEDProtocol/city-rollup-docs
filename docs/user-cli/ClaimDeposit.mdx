@@ -1,0 +1,20 @@
+# Claim Deposit
+
+## Description
+Users can declare that they have indeed staked on L1 by providing the transaction hash and user id of the deposit.
+
+## Usage
+```bash
+city-rollup-user-cli claim-deposit --private-key <l1 private key (hex, not wif)> --txid <L1 deposit transaction hash> --user-id <user_id>         
+```
+
+## Example
+The user's private key is 0x80e795d4a4caadd7047af389d9f7f220562feb6196032e2131e10563352c4bcc, and the user uses transaction hash a97d6231eaba54ccd65185134b7e830562540d933598d9decc6ec36bf4f632d5 and user_id 1 to claim the deposit
+```bash
+city-rollup-user-cli claim-deposit --private-key 80e795d4a4caadd7047af389d9f7f220562feb6196032e2131e10563352c4bcc --txid a97d6231eaba54ccd65185134b7e830562540d933598d9decc6ec36bf4f632d5 --user-id 1         
+```
+
+
+## Note
+- The `rpc_address` can use the environment variable `RPC_ADDRESS` to set the RPC address.
+- The `network` can use the environment variable `NETWORK` to set the network.

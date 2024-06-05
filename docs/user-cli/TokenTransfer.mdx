@@ -1,0 +1,19 @@
+# Transfer
+
+## Description
+Transfer tokens from one user to another user on the rollup chain.
+
+## Usage
+```bash
+city-rollup-user-cli token-transfer --private-key <L2 private key> --value <ammount in sats> --from <sender user id> --to <receiver user id> --nonce <specific to enhanced security>         
+```
+
+## Example
+Transfer 5 DOGE from user 1 to user 2 with a private key 0x0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34
+```bash
+city-rollup-user-cli token-transfer --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --value 500000000 --from 1 --to 2 --nonce 1         
+```
+
+## Note
+- The `rpc_address` can use the environment variable `RPC_ADDRESS` to set the RPC address.
+- The `network` can use the environment variable `NETWORK` to set the network.

@@ -1,0 +1,20 @@
+# Add Withdrawal
+
+## Description
+Withdraw funds from L2 to the address specified on L1.
+
+## Usage
+```bash
+city-rollup-user-cli add-withdrawal --private-key <L2 private key> --user-id <user_id> --value <ammount to withdraw in sats> --nonce <a random number for enhanced security> --destination <L1 p2pkh address>         
+```
+
+## Example
+Withdraw 5 DOGE from the wallet with a private key 0x0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 to the address 0x50c23c90de69c68bd240f9b00f248f3e645ed176
+```bash
+city-rollup-user-cli add-withdrawal --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --user-id 1 --value 500000000 --nonce 1 --destination 50c23c90de69c68bd240f9b00f248f3e645ed176         
+```
+
+## Note
+- The `rpc_address` can use the environment variable `RPC_ADDRESS` to set the RPC address.
+- The `network` can use the environment variable `NETWORK` to set the network.
+

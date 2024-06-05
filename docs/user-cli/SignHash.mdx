@@ -1,0 +1,15 @@
+# Sign Hash
+
+## Description
+Sign the action hash with the user's private key.
+
+## Usage
+```bash
+city-rollup-user-cli sign-hash --private-key <L2 private key> --action-hash <action_hash> --output <output file name>         
+```
+
+## Example
+Sign the action hash with the private key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 and save the proof to the file sign_result.proof
+```bash
+city-rollup-user-cli sign-hash --private-key 0ed2be709b9ac1cefb7c35449c423efd22bbfe5cff7aa08f00faad772c242a34 --action-hash 081162f1ae48232a6d4a1e9c35adc0b4f2349fcaa740fa6034a7542e0ed1e5ca --output sign_result.proof         
+```
