@@ -11,13 +11,12 @@ Before installing City Rollup, you should check that all of the following tools 
 
 Then you should download a pre-generated file for `bls12_381`.
 
-Note: The sha256 checksum of the file is 88da99ef3d9e0aa9e57228da972201766f97b8f64afd2d8d459fee978259f373
 ``` shell
-wget https://city-rollup.s3.amazonaws.com/alpha/city-rollup-bls12_381-setup.tgz 
-sha256sum city-rollup-bls12_381-setup.tgz #or "shasum -a 256 city-rollup-bls12_381-setup.tgz"
-tar -zxvf city-rollup-bls12_381-setup.tgz
-mkdir ~/.city-rollup
-mv trust-setup ~/.city-rollup/keystore
+wget https://city.qed.me/alpha/v1/cr-trusted-setup.zip 
+rm -rf ~/.city-rollup/keystore 
+mkdir -p ~/.city-rollup/keystore 
+unzip cr-trusted-setup.zip -d ~/.city-rollup/keystore 
+#rm cr-trusted-setup.zip 
 ```
 After completing the above preparations, clone the City Rollup repo:
 ```bash
