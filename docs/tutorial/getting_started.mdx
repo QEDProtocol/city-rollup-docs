@@ -5,20 +5,66 @@ sidebar_position: 1
 
 
 ## Dependencies
-To setup City Rollup, you first need to install [Docker](https://docs.docker.com/get-docker/).
+Before installing City Rollup, you should check that all of the following tools are installed.
+* [Docker](https://docs.docker.com/get-docker/) 
+* [Rust](https://www.rust-lang.org/tools/install)
 
-Once docker is installed, clone the City Rollup repo:
+Then you should download a pre-generated file for `bls12_381`.
+
+``` shell
+wget https://city.qed.me/alpha/v1/cr-trusted-setup.zip 
+rm -rf ~/.city-rollup/keystore 
+mkdir -p ~/.city-rollup/keystore 
+unzip cr-trusted-setup.zip -d ~/.city-rollup/keystore 
+#rm cr-trusted-setup.zip 
+```
+After completing the above preparations, clone the City Rollup repo:
 ```bash
 git clone https://github.com/QEDProtocol/city-rollup
 cd city-rollup
 make build
 ```
 
-After City Rollup is installed, you can spin up a minimal instance of CityRollup with the following commands:
+After compiling City Rollup, you can start the smallest instance of City Rollup with the following command:
+
+Note: You need to run the last three commands in different terminal windows.
 ```bash
 make relaunch
 make run-rpc-server
 make run-orchestrator
-make run-api-server
 make run-l2-worker
 ```
+
+Now that City Rollup is up and running, you can use it by following the example below, or reading the documentation on `User Wallet/CLI`
+* Send command to produce the next block and dispatch proving tasks to workers
+```bash
+make cr_produce_block
+```
+* Register two users on L2
+```bash
+make cr_register_user
+```
+* Deposit funds from Dogecoin to L2
+```bash
+make cr_l1_deposit #please copy the txid
+```
+* Produce another block to mark the deposits as claimable on L2
+```bash
+make cr_produce_block
+```
+* Claim deposited funds
+```bash
+make TXID=... cr_claim_deposit #no 0x prefix
+```
+* Transfer claimed funds from to another
+```bash
+make cr_token_transfer
+```
+* Produce another block
+```bash
+make cr_produce_block
+```
+
+
+
+
